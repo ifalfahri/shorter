@@ -1,30 +1,29 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useFormStatus } from 'react-dom'
-import { updateShortCode } from '../actions'
-import { createShortUrl } from '../actions'
+import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { createShortUrl, updateShortCode } from "../actions";
 
 export default function ShortUrlDisplay() {
-  const [shortUrl, setShortUrl] = useState<any>(null)
-  const [isEditing, setIsEditing] = useState(false)
+  const [shortUrl, setShortUrl] = useState<any>(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleCreateShortUrl = async (formData: FormData) => {
-    const result = await createShortUrl(formData)
+    const result = await createShortUrl(formData);
     if (result.shortUrl) {
-      setShortUrl(result.shortUrl)
+      setShortUrl(result.shortUrl);
     }
-  }
+  };
 
   const handleUpdateShortCode = async (formData: FormData) => {
-    const result = await updateShortCode(formData)
+    const result = await updateShortCode(formData);
     if (result.shortUrl) {
-      setShortUrl(result.shortUrl)
-      setIsEditing(false)
+      setShortUrl(result.shortUrl);
+      setIsEditing(false);
     }
-  }
+  };
 
-  if (!shortUrl) return null
+  if (!shortUrl) return null;
 
   return (
     <div className="mt-4">
@@ -42,7 +41,7 @@ export default function ShortUrlDisplay() {
           onClick={() => setIsEditing(!isEditing)}
           className="px-2 py-1 bg-gray-200 rounded"
         >
-          {isEditing ? 'Cancel' : 'Edit'}
+          {isEditing ? "Cancel" : "Edit"}
         </button>
       </div>
       {isEditing && (
@@ -58,19 +57,18 @@ export default function ShortUrlDisplay() {
         </form>
       )}
     </div>
-  )
+  );
 }
 
 function SubmitButton() {
-  const { pending } = useFormStatus()
+  const { pending } = useFormStatus();
   return (
     <button
       type="submit"
       disabled={pending}
       className="ml-2 px-4 py-2 bg-blue-500 text-white rounded disabled:bg-blue-300"
     >
-      {pending ? 'Updating...' : 'Update'}
+      {pending ? "Updating..." : "Update"}
     </button>
-  )
+  );
 }
-
